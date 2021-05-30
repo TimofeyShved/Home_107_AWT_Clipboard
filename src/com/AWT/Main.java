@@ -10,13 +10,13 @@ import java.io.IOException;
 public class Main {
 
     public static void main(String[] args) throws IOException, UnsupportedFlavorException {
-        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-        StringSelection stringSelection = new StringSelection("11");
-        clipboard.setContents(stringSelection, null);
+        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard(); // создание буфера обмена
+        StringSelection stringSelection = new StringSelection("11"); // строка выбраного текста
+        clipboard.setContents(stringSelection, null); // копируем её в буфер обмена
 
-        DataFlavor flavor = DataFlavor.stringFlavor;
-        if (clipboard.isDataFlavorAvailable(flavor)){
-            System.out.println(clipboard.getData(flavor));
+        DataFlavor flavor = DataFlavor.stringFlavor; // тип данных
+        if (clipboard.isDataFlavorAvailable(flavor)){ // если буфер обмена не пуст
+            System.out.println(clipboard.getData(flavor)); // вывод на экран, значения из буфера обмена
         }
     }
 }
