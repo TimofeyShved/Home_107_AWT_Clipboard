@@ -10,37 +10,38 @@ import java.io.IOException;
 
 public class IMGclipboard {
     public static void main(String[] args) throws IOException, UnsupportedFlavorException {
-        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-        Image image = new BufferedImage(100,100,BufferedImage.TYPE_INT_ARGB);
-        Graphics g = image.getGraphics();
-        g.fillOval(0, 0, 100, 100);
-        ImageTransferable imageTransferable = new ImageTransferable(image);
-        clipboard.setContents(imageTransferable, null);
+        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();// создание буфера обмена
+        Image image = new BufferedImage(100,100,BufferedImage.TYPE_INT_ARGB); // создание картинки
+        Graphics g = image.getGraphics(); // графика
+        g.fillOval(0, 0, 100, 100); // рисуем овал
+        ImageTransferable imageTransferable = new ImageTransferable(image); // наш класс с картинкой
+        clipboard.setContents(imageTransferable, null); // копируем в наш буфер обмена
 
-        DataFlavor flavor = DataFlavor.imageFlavor;
+        DataFlavor flavor = DataFlavor.imageFlavor; // тип данных
         if (clipboard.isDataFlavorAvailable(flavor)){ // если буфер обмена не пуст
-            Image img = (Image) clipboard.getData(flavor);
+            Image img = (Image) clipboard.getData(flavor); // вставляем картинку из буфера обмена
         }
     }
 }
 
 class ImageTransferable implements Transferable{
-    Image theImage;
-    public ImageTransferable(Image image){
+    Image theImage; // наша картинка
+
+    public ImageTransferable(Image image){ // коснтруктор
         theImage=image;
     }
     @Override
-    public DataFlavor[] getTransferDataFlavors() {
+    public DataFlavor[] getTransferDataFlavors() { // поддерживаемый тип
         return new DataFlavor[]{DataFlavor.imageFlavor};
     }
 
     @Override
-    public boolean isDataFlavorSupported(DataFlavor flavor) {
+    public boolean isDataFlavorSupported(DataFlavor flavor) { // проверка типа
         return flavor.equals(DataFlavor.imageFlavor);
     }
 
     @Override
-    public Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException, IOException {
+    public Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException, IOException { // вернуть картинку
         if (flavor.equals(DataFlavor.imageFlavor)){
             return theImage;
         }else {
